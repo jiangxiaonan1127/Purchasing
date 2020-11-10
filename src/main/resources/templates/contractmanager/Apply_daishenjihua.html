@@ -1,0 +1,54 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>待审批合同申请一览表</TITLE>
+  <META http-equiv=Content-Language content=zh-cn>
+  <META http-equiv=Content-Type content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+  <script type="text/javascript" th:inline="none">
+    $(function () {
+      $("#dg").datagrid({
+        url: "/showAllDaiShenjihuaConApp",
+        pagination: true,
+        rownumbers: true,
+        singleSelect: true,
+        pageList: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+        columns: [[
+          {field: 'id', title: '序号', width: '10%'},
+          {field: 'contAppNum', title: '合同编号', width: '20%'},
+          {field: 'status', title: '合同进度', width: '20%',formatter:function (value,row,index) {
+                  if (row.status=="C001-130"){
+                    return "财务部长审批通过，计划部长待审批";
+                  }
+            }},
+          {field: 'queDate', title: '揭示时间', width: '20%'},
+          {field: 'company', title: '供货商', width: '10%'},
+          {field: 'allSumPrice', title: '报价总金额', width: '10%'},
+          {field: 'enquireName', title: '对应询价书', width: '10%'}
+        ]]
+      });
+    });
+    function shenpi() {
+      var row = $('#dg').datagrid('getSelected');
+      if (row){
+        window.location.href="/toShenpi?conAppId="+row.id;
+      }else {
+        $.messager.alert('警告','请选择一行');
+      }
+    }
+  </script>
+</HEAD>
+<BODY>
+<CENTER>
+  <H2><FONT color=#0070c0>计划审批合同一览</FONT></H2>
+  <!--分割线-->
+  <table id="dg" toolbar="#toolbar"></table>
+  <!--工具栏-->
+  <div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="shenpi()">打开合同审批</a>
+  </div>
+  <!--分割线-->
+</CENTER>
+</BODY>
+</HTML>

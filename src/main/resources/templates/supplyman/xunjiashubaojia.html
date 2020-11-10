@@ -1,0 +1,61 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<HEAD>
+    <TITLE>询价书报价</TITLE>
+    <META http-equiv=Content-Language content=zh-cn>
+    <META http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+    <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+    <script type="text/javascript" th:inline="none">
+        $(function () {
+            $("#dg").datagrid({
+                url: "/showAllNoAddQuote",
+                pagination: true,
+                rownumbers: true,
+                singleSelect: true,
+                pageList: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+                columns: [[
+                    {field: 'id', title: '序号', width: '10%'},
+                    {field: 'enquireNum', title: '询价书编号', width: '20%'},
+                    {field: 'enquireName', title: '询价书名称', width: '20%'},
+                    {field: 'endDate', title: '询价书截止时间', width: '20%'},
+                    {field: 'status', title: '状态', width: '20%',formatter:function (value, row, index) {
+                            if (row.status=="C001-80"){
+                                return "未编制报价";
+                            }
+                        }},
+                    {field: 'stockType', title: '采购类型', width: '10%', formatter: function (value,row,index) {
+                            if (row.stockType=="C000-1"){
+                                return "公开求购";
+                            }else {
+                                return "定向询价";
+                            }
+                        }}
+                ]]
+            });
+        });
+        function addQuote(){
+            var row = $('#dg').datagrid('getSelected');
+            if (row){
+                window.location.href="/toAddQuote?enquireId="+row.id;
+            }else {
+                $.messager.alert('警告','请选择一行')
+            }
+        }
+    </script>
+</HEAD>
+<BODY>
+<CENTER>
+    <H2><FONT color=#0070c0>询价书报价</FONT></H2>
+    <!--分割线-->
+    <table id="dg" toolbar="#toolbar"></table>
+    <!--工具栏-->
+    <div id="toolbar">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addQuote()">添加报价</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true">详细</a>
+    </div>
+    <!--分割线-->
+</CENTER>
+</BODY>
+</HTML>

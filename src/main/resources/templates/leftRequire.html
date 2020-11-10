@@ -1,0 +1,55 @@
+<HTML>
+	<HEAD>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<link type="text/css" rel="stylesheet" href="js/xtree.css" />
+		<script language="javascript" src="js/xtree.js"></script>
+		<script language="javascript" src="js/radioTreeItem.js"></script>
+		<link rel="stylesheet" type="text/css" href="jquery-easyui-1.8.5/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="jquery-easyui-1.8.5/themes/icon.css">
+		<script type="text/javascript" src="jquery-easyui-1.8.5/jquery.min.js"></script>
+		<script type="text/javascript" src="jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+		<script type="text/javascript">
+			$(function () {
+				$.ajax({
+					url:"/showMenu",
+					type:"get",
+					dataType:"json",
+					success:function(data) {
+						//测试数据
+						// console.log(data);
+						$(data).each(function (index,menu) {
+							if(menu.id==1 || menu.id== 2 || menu.id==3 || menu.id== 4 ||menu.id==5 || menu.id== 6 ||menu.id==7 || menu.id== 8 ){
+								//动态创建手风琴
+								//一级菜单
+								$('#myAccordion').accordion('add',{
+									title:menu.text,
+									id:"first"+menu.id
+								});
+								$("#first"+menu.id).html("<ul id='myTree"+menu.id+"'></ul>");
+
+								$("#myTree"+menu.id).tree({
+									data:menu.children,
+									onClick:function (node) {
+										window.parent.main.location=node.attribute.linkUrl;
+									}
+								});
+							}
+						});
+					},error:function () {
+						alert("error");
+					}
+				});
+			});
+		</script>
+	</HEAD>
+	<BODY style="cursor: default; background: #e7f3ff;" text=#000000 leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+	<div id="myAccordion" class="easyui-accordion" style="width:500px;height:300px;" data-options="fit:'true'"></div>
+
+	</BODY>
+</HTML>
+
+
+
+
+

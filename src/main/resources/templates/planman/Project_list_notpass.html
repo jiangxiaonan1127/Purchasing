@@ -1,0 +1,75 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<HEAD>
+  <TITLE>采购计划一览表</TITLE>
+  <META http-equiv=Content-Language content=zh-cn>
+  <META http-equiv=Content-Type content="text/html; charset=UTF-8">
+  <LINK href="../css/style.css" rel=stylesheet>
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+  <script type="text/javascript" th:inline="none">
+    $(function (){
+      $("#dg").datagrid({
+        url:"/showStockByNoPass",
+        pagination:true,
+        rownumbers:true,
+        singleSelect:true,
+        pageList:[2,3,4,5,6,7,8,9,10],
+        columns:[[
+          {field:'id',title:'序号',width:'10%'},
+          {field:'stockNum',title:'采购计划编号',width:'20%'},
+          {field:'stockName',title:'采购计划名称',width:'20%'},
+          {field:'stockType',title:'采购类型',width:'20%',formatter:function (value,row,index){
+                    if (row.stockType=="C000-1"){
+                      return "公开求购";
+                    }else {
+                      return "定向询价";
+                    }
+            }},
+          {field:'status',title:'采购进度',width:'10%'},
+          {field:'leader',title:'审批人',width:'10%'},
+          {field:'leadDate',title:'审批时间',width:'10%'}
+        ]]
+      });
+    });
+    function delStock() {
+      var row = $('#dg').datagrid("getSelected");
+      if (row){
+        $.ajax({
+          url:"/delStockByNoPass",
+          data:{"stockId":row.id},
+          type:"post",
+          success:function (result){
+            if (result=="success"){
+              $.messager.show({
+                title:'系统提示',
+                msg:'删除成功',
+                timeout:3000,
+                showType:'slide'
+              });
+              //刷新
+              $('#dg').datagrid('reload');
+            }
+          }
+        });
+      }else {
+        $.messager.alert('警告','请选择一行');
+      }
+    }
+  </script>
+</HEAD>
+<BODY>
+<CENTER>
+  <H2><FONT color=#0070c0>未通过审批采购计划一览表</FONT></H2>
+  <!--分割线-->
+  <table id="dg" toolbar="#toolbar"></table>
+  <!--工具栏-->
+  <div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true">详细</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="delStock()">删除</a>
+  </div>
+  <!--分割线-->
+</CENTER>
+</BODY>
+</HTML>

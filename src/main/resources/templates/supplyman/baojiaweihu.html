@@ -1,0 +1,54 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>报价维护</TITLE>
+    <META http-equiv=Content-Language content=zh-cn>
+    <META http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+    <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+    <script type="text/javascript" th:inline="none">
+        $(function () {
+            $("#dg").datagrid({
+                url:"/showQuoteAfterAddQuote",
+                pagination:true,
+                rownumbers:true,
+                singleSelect:true,
+                pageList:[2,3,4,5,6,7,8,9,10],
+                columns:[[
+                    {field:'id',title:'序号',width:'10%'},
+                    {field:'quoteNum',title:'报价书标题',width:'25%'},
+                    {field:'queDate',title:'报价提交时间',width:'20%'},
+                    {field:'enquireName',title:'对应询价书',width:'15%'},
+                    {field:'endDate',title:'询价截止时间',width:'15%'},
+                    {field:'stockType',title:'采购类型',width:'15%',formatter:function (value, row, index) {
+                            if (row.stockType=="C000-1"){
+                                return "公开求购";
+                            }else {
+                                return "定向询价";
+                            }
+                        }}
+                ]]
+            });
+        });
+        function editQuote(){
+            var row = $('#dg').datagrid('getSelected');
+            console.log(row.id);
+            if (row){
+                window.location.href="/toEditQuote?quoteId="+row.id;
+            }else {
+                $.messager.alert('警告','请选择一行');
+            }
+        }
+    </script>
+</HEAD>
+<BODY>
+    <H2 style="text-align: center"><font  color=#0070C0 >报价维护</font></H2>
+    <!-------------------------------------分割线------------------------------------------>
+    <table id="dg" toolbar="#toolbar">
+    </table>
+    <!--工具栏-->
+    <div id="toolbar">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editQuote()">修改报价</a>
+    </div>
+</BODY>
+</HTML>

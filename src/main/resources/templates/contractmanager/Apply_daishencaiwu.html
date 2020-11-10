@@ -1,0 +1,52 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<HEAD>
+  <TITLE>待审批采购计划申请一览表</TITLE>
+
+  <META http-equiv=Content-Language content=zh-cn>
+  <META http-equiv=Content-Type content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+  <script type="text/javascript" th:inline="none">
+    $(function (){
+      $("#dg").datagrid({
+        url:"/showStocksByStatus",
+        pagination:true,
+        rownumbers:true,
+        singleSelect:true,
+        pageList:[2,3,4,5,6,7,8,9,10],
+        columns:[[
+          {field:'id',title:'序号',width:'10%'},
+          {field:'stockName',title:'采购计划名称',width:'60%'},
+          {field:'status',title:'合同进度',width:'20%',formatter:function (value,row,index){
+                          if (row.status=="C001-40"){
+                             return "<a href='#'>待审核</a>"
+                          }
+            }},
+          {field:'budget',title:'报价总金额',width:'10%'},
+        ]]
+      });
+    });
+    function toShenPi() {
+      var row = $('#dg').datagrid("getSelected");
+      if (row){
+        window.location.href="/toShenPiStock?stockId="+row.id;
+      }else {
+        $.messager.alert('警告','请选择一行');
+      }
+    }
+  </script>
+</HEAD>
+<BODY>
+  <CENTER>
+    <H2><FONT color=#0070c0>待审批采购计划一览表</FONT></H2></B>
+    <!--分割线EasuUIdatagrid-->
+    <table id="dg" toolbar="#toolbar"></table>
+    <!--工具栏-->
+    <div id="toolbar">
+      <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="toShenPi()">审批</a>
+    </div>
+  </CENTER>
+</BODY>
+</HTML>

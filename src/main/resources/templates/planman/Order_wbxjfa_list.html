@@ -1,0 +1,88 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<HEAD>
+  <TITLE>未编采购计划的需求计划一览表</TITLE>
+  <META http-equiv=Content-Language content=zh-cn>
+  <META http-equiv=Content-Type content="text/html; charset=UTF-8">
+  <META content="MSHTML 6.00.2900.5626" name=GENERATOR>
+  <META content=FrontPage.Editor.Document name=ProgId>
+  <LINK href="../css/style.css" rel=stylesheet>
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+  <script type="text/javascript" th:inline="none">
+    $(function () {
+      $("#dg").datagrid({
+        url:"/showStock",
+        pagination:true,
+        rownumbers:true,
+        singleSelect:false,
+        pageList:[2,3,4,5,6,7,8,9,10],
+        columns:[[
+          {field:'ck',checkbox:true,width:'5%'},
+          {field:'id',title:'序号',width:'5%'},
+          {field:'materialCode',title:'物资编码',width:'14%'},
+          {field:'materialName',title:'物资名称',width:'40%'},
+          {field:'amount',title:'数量',width:'10%'},
+          {field:'unitPrice',title:'预算价格',width:'10%'},
+          {field:'endDate',title:'需求时间',width:'20%'}
+        ]]
+      });
+    });
+  </script>
+  <script type="text/javascript">
+      function toBianzhicaigoujihua() {
+          var row = $('#dg').datagrid("getSelected");
+          if (row){
+            window.location.href="/toBianzhicaigoujihua?orderId="+row.id;
+          }
+      }
+  </script>
+</HEAD>
+<BODY>
+<CENTER>
+  <H2><FONT color=#0070c0>未编采购计划的需求一览表</FONT></H2>
+  <TABLE cellSpacing=1 cellPadding=0 width="100%" bgColor=#ffffff borderColorLight=#ffffff border=0>
+  <TBODY>
+  <TR>
+    <TD>
+      <TABLE cellSpacing=1 cellPadding=3 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD noWrap align=middle>
+            物资编码：<INPUT maxLength=15 size=15 name=p_prodno>&nbsp;&nbsp;
+            物资名称：<INPUT maxLength=15 size=15 name=p_prodname>&nbsp;&nbsp;
+            每页显示个数：
+            <SELECT name=p_pagesize>
+              <OPTION value=10 selected>10</OPTION>
+              <OPTION value=20>20</OPTION>
+              <OPTION value=30>30</OPTION>
+              <OPTION value=50>50</OPTION>
+              <OPTION value=100>100</OPTION>
+              <OPTION value=4>全部</OPTION></SELECT>
+            排序：
+            <SELECT name=p_orderby>
+              <OPTION value="" selected>按物资代码</OPTION>
+              <OPTION value=1>按需求时间</OPTION>
+              <OPTION value=2>按需求数量</OPTION>
+            </SELECT>
+            <INPUT id=button2 onclick=submit_form_cx() type=button value=查询 name=button2>
+          </TD>
+        </TR>
+        </TBODY>
+      </TABLE>
+    </TD>
+  </TR>
+  </TBODY>
+</TABLE>
+  <!--分割线-->
+  <table id="dg" toolbar="#toolbar">
+  </table>
+  <!--工具栏-->
+  <div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="toBianzhicaigoujihua()">编制采购计划</a>
+  </div>
+  <!--表单对话框-->
+</CENTER>
+</BODY>
+</HTML>

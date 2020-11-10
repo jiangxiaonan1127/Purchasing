@@ -1,0 +1,129 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<HEAD>
+  <TITLE>采购计划一览表</TITLE>
+  <META http-equiv=Content-Language content=zh-cn>
+  <META http-equiv=Content-Type content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+
+  <script type="text/javascript" th:inline="none">
+    $(function () {
+      $("#dg").datagrid({
+        url:"/showAllStocks",
+        pagination:true,
+        rownumbers:true,
+        singleSelect:true,
+        pageList:[2,3,4,5,6,7,8,9,10],
+        columns:[[
+          {field:'id',title:'序号',width:'10%'},
+          {field:'stockName',title:'采购计划名称',width:'10%'},
+          {field:'stockType',title:'采购计划类型',width:'30%',formatter:function (value,row,index) {
+                  if (row.stockType=="C000-1"){
+                    return "公开求购";
+                  }else {
+                    return "定向询价";
+                  }
+            }},
+          {field:'status',title:'状态',width:'20%',formatter:function (value,row,index) {
+                  if (row.status=="C001-30"){
+                    return "未确定";
+                  }
+                  if (row.status=="C001-40"){
+                    return "待审核";
+                  }
+                  if (row.status=="C001-50"){
+                    return "未下达";
+                  }
+                  if (row.status=="C001-51"){
+                    return "未通过审核";
+                  }
+                  return "下达";
+            }},
+          {field:'submitDate',title:'采购计划下达时间',width:'20%'},
+          {field:'enquireName',title:'对应询价书',width:'10%'}
+        ]]
+      });
+    });
+    function updateStatus() {
+      var row = $('#dg').datagrid("getSelected");
+      if (row){
+        if (row.status=="C001-30"){
+          $.ajax({
+            url:"/updateStockStatus",
+            data:{"stockId":row.id,"status":row.status},
+            type:"post",
+            success:function (result) {
+              if (result=="success"){
+                $.messager.show({
+                  title:'系统提示',
+                  msg:'报批成功',
+                  timeout:3000,
+                  showType:'slide'
+                });
+                //刷新
+                $('#dg').datagrid('reload');
+              }
+            }
+          });
+        }else {
+          $.messager.alert('提示','请选择未确定状态的采购计划');
+        }
+      }else {
+        $.messager.alert('警告','请选择一行');
+      }
+
+    }
+  </script>
+</HEAD>
+<BODY>
+<DIV id=overDiv style="Z-INDEX: 1; POSITION: absolute"></DIV>
+<CENTER>
+<H2><FONT color=#0070c0>采购计划一览表</FONT></H2>
+<TABLE cellSpacing=1 cellPadding=0 width="100%" bgColor=#ffffff borderColorLight=#ffffff border=0>
+  <TBODY>
+  <TR>
+    <TD>
+      <TABLE cellSpacing=1 cellPadding=3 width="100%" border=0>
+        <TBODY>
+        <TR bgColor=#ffffff>
+          <TD noWrap align=middle>
+            采购计划名称：<INPUT size=10 name=p_title>&nbsp;&nbsp;
+            物资名称：<INPUT size=10 name=p_Item>&nbsp;&nbsp;
+            计划状态：
+            <SELECT style="WIDTH: 115px" name=p_status>
+              <OPTION value="" selected>全部</OPTION>
+              <OPTION value=70>未确定</OPTION>
+              <OPTION value=80>待审</OPTION>
+              <OPTION value=100>驳回</OPTION>
+              <OPTION value=110>下达</OPTION>
+              <OPTION value=120>通过</OPTION>
+              <OPTION value=140>废弃</OPTION>
+            </SELECT>&nbsp;&nbsp;
+            采购类型：
+            <SELECT style="WIDTH: 80px" name=p_stocktype>
+              <OPTION value="" selected>全部</OPTION>
+              <OPTION value=1>公开求购</OPTION>
+              <OPTION value=2>定向询价</OPTION>
+            </SELECT>&nbsp;&nbsp;
+            <INPUT onclick=submit_form_cx() type=button value=查询>
+          </TD>
+        </TR>
+        </TBODY>
+      </TABLE>
+    </TD>
+  </TR>
+  </TBODY>
+</TABLE>
+  <!--分割线-->
+  <table id="dg" toolbar="#toolbar"></table>
+  <!--工具栏-->
+  <div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="updateStatus()">报批</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true">详细</a>
+  </div>
+  <!--分割线-->
+</CENTER>
+</BODY>
+</HTML>

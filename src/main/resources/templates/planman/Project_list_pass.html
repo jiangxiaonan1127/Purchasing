@@ -1,0 +1,87 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+    <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="text/javascript" th:inline="none">
+        $(function (){
+            $("#dg").datagrid({
+                url:"/showStocksByPass",
+                pagination:true,
+                rownumbers:true,
+                singleSelect:true,
+                pageList:[2,3,4,5,6,7,8,9,10],
+                columns:[[
+                    {field:'id',title:'序号',width:'10%'},
+                    {field:'stockNum',title:'采购计划编号',width:'10%'},
+                    {field:'stockName',title:'采购计划名称',width:'30%'},
+                    {field:'stockType',title:'采购类型',width:'20%',formatter:function (value,row,index){
+                            if (row.stockType=="C000-1"){
+                                return "公开求购";
+                            }else {
+                                return "定向询价";
+                            }
+                        }},
+                    {field:'status',title:'采购进度',width:'20%',formatter:function (value, row, index) {
+                            if (row.status=="C001-50"){
+                                return "未下达";
+                            }
+                        }},
+                    {field:'leadDate',title:'审批时间',width:'10%'}
+                ]]
+            });
+        });
+        function updateStatus() {
+            var row = $('#dg').datagrid("getSelected");
+            if (row){
+                $.ajax({
+                    url:"/updateStockAndStatusByXiada",
+                    data:{"stockId":row.id,"status":row.status},
+                    type:"post",
+                    success:function (result){
+                        if (result=="success"){
+                            $.messager.show({
+                                title:'系统提示',
+                                msg:'下达成功',
+                                timeout:3000,
+                                showType:'slide'
+                            });
+                            //刷新
+                            $('#dg').datagrid('reload');
+                        }
+                    }
+                });
+            }else {
+                $.messager.alert('警告','请选择一行')
+            }
+        }
+    </script>
+<title>采购计划一览表</title>
+</head>
+<body>
+<center>
+    <table cellpadding="3" cellspacing="1" border="0" width="100%" id="table1">
+        <tr bgcolor="#ffffff">
+            <td width="100%" colspan="20" bgcolor="#ffffff" align=center height=22>
+                <B><H2><font  color=#0070C0 >未下达采购计划一览表</font></H2></B>
+            </td>
+        </tr>
+    </table>
+    <!--分割线 EasyUI datagrid-->
+    <table id="dg" toolbar="#toolbar"></table>
+    <!--工具栏-->
+    <div id="toolbar">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="updateStatus()">下达</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true">打开</a>
+    </div>
+</center>
+</body>
+</html>
+
+
+
+

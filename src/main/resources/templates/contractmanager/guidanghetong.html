@@ -1,0 +1,63 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>可归档合同</TITLE>
+  <META http-equiv=Content-Language content=zh-cn>
+  <META http-equiv=Content-Type content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+  <script type="text/javascript" th:inline="none">
+    $(function () {
+      $("#dg").datagrid({
+        url: "/showguidanghetong",
+        pagination: true,
+        rownumbers: true,
+        singleSelect: true,
+        pageList: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+        columns: [[
+          {field: 'id', title: '序号', width: '10%'},
+          {field: 'contNum', title: '合同编号', width: '30%'},
+          {field: 'contDate', title: '签订时间', width: '20%'},
+          {field: 'contPrice', title: '总金额', width: '20%'},
+          {field: 'supplierNum', title: '供应商编号', width: '20%'}
+        ]]
+      });
+    });
+    function guidanghetong() {
+      var row = $('#dg').datagrid('getSelected');
+      if (row){
+        $.ajax({
+          url:"/updaetehetongguidang",
+          data:"contId="+row.id,
+          type:"post",
+          success:function (result){
+            if (result=="success"){
+              $.messager.show({
+                title:'系统提示',
+                msg:'确认成功',
+                timeout:3000,
+                showType:'slide'
+              });
+              //刷新
+              $('#dg').datagrid('reload');
+            }
+          }
+        });
+      }else {
+        $.messager.alert('警告','请选择一行');
+      }
+    }
+  </script>
+<BODY>
+<CENTER>
+  <H2><FONT color=#0070c0>可归档合同</FONT></H2>
+  <!--分割线-->
+  <table id="dg" toolbar="#toolbar"></table>
+  <!--工具栏-->
+  <div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="guidanghetong()">归档合同</a>
+  </div>
+  <!--分割线-->
+</CENTER>
+</BODY>
+</HTML>
