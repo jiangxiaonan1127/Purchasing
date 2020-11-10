@@ -57,5 +57,14 @@ public class ContratServiceImpl implements ContractService {
         e.setRows(contractMapper.findguidanghetong((curPage-1)*pageSize,pageSize));
         return e;
     }
+    //分页查询已经归档的合同
+    @Override
+    public EasyUIDataGrid findFinallhetonghetong(Integer curPage, Integer pageSize) {
+        EasyUIDataGrid e = new EasyUIDataGrid();
+        e.setTotal(contractMapper.findFinallhetongTotals());
+        e.setRows(contractMapper.findFinallhetong((curPage-1)*pageSize,pageSize));
+        return e;
+    }
+
 
 }

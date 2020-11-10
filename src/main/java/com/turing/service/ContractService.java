@@ -19,4 +19,6 @@ public interface ContractService {
     EasyUIDataGrid findAllNoSurehetong(Integer curPage,Integer pageSize);
     //分页查询所有确认状态的
     EasyUIDataGrid findguidanghetong(Integer curPage,Integer pageSize);
+    //分页查询已归档
+    EasyUIDataGrid findFinallhetonghetong(Integer curPage,Integer pageSize);
 }

@@ -92,6 +92,13 @@
     STANDARD_NO, PLACE, CONT_PRICE, TRANSPORT, PAY_WAY, OUT_PERM, OUT_DAY, REMARK
   </sql>
 
+  <select id="findFinallhetong" parameterType="com.turing.entity.ContractExample" resultMap="BaseResultMap">
+    select * from contract c, id_mapping i
+    where c.id = i.CONT_ID
+    and i.status='C001-180'
+    limit ${curPage},${pageSize}
+  </select>
+
   <select id="findguidanghetong" parameterType="com.turing.entity.ContractExample" resultMap="BaseResultMap">
     select * from contract c, id_mapping i
     where c.id = i.CONT_ID

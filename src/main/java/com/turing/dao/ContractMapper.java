@@ -22,6 +22,11 @@ public interface ContractMapper {
 
     List<Contract> findguidanghetong(Integer curPage,Integer pageSize);
 
+    @Select("select count(*) from contract c,id_mapping i where c.ID = i.CONT_ID and i.status ='C001-180'")
+    int findFinallhetongTotals();
+
+    List<Contract>  findFinallhetong(Integer curPage,Integer pageSize);
+
     long countByExample(ContractExample example);
 
     int deleteByExample(ContractExample example);

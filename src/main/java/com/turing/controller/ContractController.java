@@ -146,4 +146,11 @@ public class ContractController {
             return "error";
         }
     }
+    //合同信息
+    //分页查询所有已归档的合同信息
+    @RequestMapping("/showFinallhetong")
+    @ResponseBody
+    public EasyUIDataGrid showFinallhetong(@RequestParam(name = "page",defaultValue = "1") Integer curPage, @RequestParam(name = "rows",defaultValue = "2") Integer pageSize){
+        return contractService.findFinallhetonghetong(curPage, pageSize);
+    }
 }

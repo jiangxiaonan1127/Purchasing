@@ -2,12 +2,37 @@
 <HEAD><TITLE>查看合同</TITLE>
   <META http-equiv=Content-Language content=zh-cn>
   <META http-equiv=Content-Type content="text/html; charset=utf-8">
-
-<META content="MSHTML 6.00.2900.5626" name=GENERATOR></HEAD>
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.8.5/themes/icon.css">
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.min.js"></script>
+  <script type="text/javascript" src="../jquery-easyui-1.8.5/jquery.easyui.min.js"></script>
+  <script type="text/javascript" th:inline="none">
+    $(function () {
+      $("#dg").datagrid({
+        url: "/showFinallhetong",
+        pagination: true,
+        rownumbers: true,
+        singleSelect: true,
+        pageList: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+        columns: [[
+          {field: 'id', title: '序号', width: '10%'},
+          {field: 'contNum', title: '合同编号', width: '30%'},
+          {field: 'contDate', title: '签订时间', width: '20%'},
+          {field: 'contPrice', title: '总金额', width: '20%'},
+          {field: 'supplierNum', title: '供应商编号', width: '20%'}
+        ]]
+      });
+    });
+  </script>
+</HEAD>
 <BODY>
 <CENTER>
-  <FONT color=#0070c0>查看合同</FONT></H2>
+  <H2><FONT color=#0070c0>查看合同</FONT></H2>
+  <!--分割线-->
+  <table id="dg"></table>
+  <!--工具栏-->
 
+  <!--分割线-->
 </CENTER>
 </BODY>
 </HTML>
