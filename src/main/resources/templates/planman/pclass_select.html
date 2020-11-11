@@ -24,20 +24,20 @@
 
                 ]]
             });
-            $("#btn").click(function () {
-                    var rows = $('#dg').datagrid('getChecked');
-                    var id=[];
-                    $.each(rows,function (index,item) {
-                        id.push(item.id);
-                    });
-                    if(id==undefined){
-                        return;
-                    }
-                    if (rows.length>0){
-                        window.location.href="/toOrder_newform?ids="+id;
-                    }
-            });
         });
+        function next(){
+            var rows = $('#dg').datagrid('getChecked');
+            var id=[];
+            $.each(rows,function (index,item) {
+                id.push(item.id);
+            });
+            if(id==undefined){
+                return;
+            }
+            if (rows.length>0){
+                window.location.href="/toOrder_newform?ids="+id;
+            }
+        }
     </script>
 </HEAD>
 <BODY>
@@ -54,14 +54,10 @@
 </TABLE>
 </CENTER>
     <!--信息展示 -->
-    <table id="dg">
-
-    </table>
-    <div align="center">
-        请先选择物资，然后点击：
-        <A href="#" id="btn">
-            <FONT size=3><U>下一步</U></FONT>
-        </A>
+    <table id="dg"  toolbar="#toolbar"></table>
+    <!--工具栏-->
+    <div id="toolbar">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" onclick="next()">下一步</a>
     </div>
 </BODY>
 </HTML>

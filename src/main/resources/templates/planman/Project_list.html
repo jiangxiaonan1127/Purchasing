@@ -81,41 +81,6 @@
 <DIV id=overDiv style="Z-INDEX: 1; POSITION: absolute"></DIV>
 <CENTER>
 <H2><FONT color=#0070c0>采购计划一览表</FONT></H2>
-<TABLE cellSpacing=1 cellPadding=0 width="100%" bgColor=#ffffff borderColorLight=#ffffff border=0>
-  <TBODY>
-  <TR>
-    <TD>
-      <TABLE cellSpacing=1 cellPadding=3 width="100%" border=0>
-        <TBODY>
-        <TR bgColor=#ffffff>
-          <TD noWrap align=middle>
-            采购计划名称：<INPUT size=10 name=p_title>&nbsp;&nbsp;
-            物资名称：<INPUT size=10 name=p_Item>&nbsp;&nbsp;
-            计划状态：
-            <SELECT style="WIDTH: 115px" name=p_status>
-              <OPTION value="" selected>全部</OPTION>
-              <OPTION value=70>未确定</OPTION>
-              <OPTION value=80>待审</OPTION>
-              <OPTION value=100>驳回</OPTION>
-              <OPTION value=110>下达</OPTION>
-              <OPTION value=120>通过</OPTION>
-              <OPTION value=140>废弃</OPTION>
-            </SELECT>&nbsp;&nbsp;
-            采购类型：
-            <SELECT style="WIDTH: 80px" name=p_stocktype>
-              <OPTION value="" selected>全部</OPTION>
-              <OPTION value=1>公开求购</OPTION>
-              <OPTION value=2>定向询价</OPTION>
-            </SELECT>&nbsp;&nbsp;
-            <INPUT onclick=submit_form_cx() type=button value=查询>
-          </TD>
-        </TR>
-        </TBODY>
-      </TABLE>
-    </TD>
-  </TR>
-  </TBODY>
-</TABLE>
   <!--分割线-->
   <table id="dg" toolbar="#toolbar"></table>
   <!--工具栏-->

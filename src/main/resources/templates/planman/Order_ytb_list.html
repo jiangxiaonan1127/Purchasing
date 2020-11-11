@@ -532,31 +532,6 @@ function check_num_dot()
 <CENTER>
   <INPUT type=hidden value=3 name=p_type>
 <H2><FONT color=#0070c0>需求计划一览表</FONT></H2>
-<TABLE cellSpacing=1 cellPadding=0 width="100%" bgColor=#ffffff borderColorLight=#ffffff border=0>
-  <TBODY>
-  <TR>
-    <TD>
-      <TABLE cellSpacing=1 cellPadding=3 width="100%" border=0>
-        <TBODY>
-        <TR>
-          <TD noWrap align=middle>
-            物资编码：<INPUT size=10 name=p_prodno>&nbsp;&nbsp;
-            物资名称：<INPUT size=10 name=p_prodname>&nbsp;&nbsp;
-            状态：
-            <SELECT style="WIDTH: 115px" name=p_status>
-              <OPTION value="" selected>全部</OPTION>
-              <OPTION value=70>未确定</OPTION>
-              <OPTION value=70>确定</OPTION>
-            </SELECT>
-            <INPUT onclick=submit_form_cx() type=button value=查询>
-          </TD>
-        </TR>
-        </TBODY>
-      </TABLE>
-    </TD>
-  </TR>
-  </TBODY>
-</TABLE>
   <!--分割线-->
   <table id="dg" toolbar="#toolbar"></table>
   <!--工具栏-->

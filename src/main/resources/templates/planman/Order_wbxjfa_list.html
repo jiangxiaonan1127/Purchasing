@@ -42,39 +42,6 @@
 <BODY>
 <CENTER>
   <H2><FONT color=#0070c0>未编采购计划的需求一览表</FONT></H2>
-  <TABLE cellSpacing=1 cellPadding=0 width="100%" bgColor=#ffffff borderColorLight=#ffffff border=0>
-  <TBODY>
-  <TR>
-    <TD>
-      <TABLE cellSpacing=1 cellPadding=3 width="100%" border=0>
-        <TBODY>
-        <TR>
-          <TD noWrap align=middle>
-            物资编码：<INPUT maxLength=15 size=15 name=p_prodno>&nbsp;&nbsp;
-            物资名称：<INPUT maxLength=15 size=15 name=p_prodname>&nbsp;&nbsp;
-            每页显示个数：
-            <SELECT name=p_pagesize>
-              <OPTION value=10 selected>10</OPTION>
-              <OPTION value=20>20</OPTION>
-              <OPTION value=30>30</OPTION>
-              <OPTION value=50>50</OPTION>
-              <OPTION value=100>100</OPTION>
-              <OPTION value=4>全部</OPTION></SELECT>
-            排序：
-            <SELECT name=p_orderby>
-              <OPTION value="" selected>按物资代码</OPTION>
-              <OPTION value=1>按需求时间</OPTION>
-              <OPTION value=2>按需求数量</OPTION>
-            </SELECT>
-            <INPUT id=button2 onclick=submit_form_cx() type=button value=查询 name=button2>
-          </TD>
-        </TR>
-        </TBODY>
-      </TABLE>
-    </TD>
-  </TR>
-  </TBODY>
-</TABLE>
   <!--分割线-->
   <table id="dg" toolbar="#toolbar">
   </table>
